@@ -1,6 +1,7 @@
 require 'devise/doorkeeper/version'
 require 'devise/strategies/doorkeeper'
 require 'devise/doorkeeper/doorkeeper_failure_app'
+require_relative './models/doorkeeper_two_factor'
 
 module Devise
   module Doorkeeper
@@ -19,13 +20,15 @@ module Devise
         # configure doorkeeper to use devise database authenticatable plugin
         resource_owner_from_credentials do
           user = User.find_for_database_authentication(email: params[:username])
-          if user && user.valid_for_authentication? { user.valid_password?(params[:password]) }
+          if user && user.valid_for_authentication? { 
+            user.valid_password?(params[:password]) &&
+            user.validate_otp(params[:otp_code]) }
             user
           else
             nil
           end
         end
       end
-    end
+    end 
   end
 end

@@ -21,7 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails'
   spec.add_dependency 'devise'
   spec.add_dependency 'doorkeeper'
-
+  spec.add_dependency 'devise-two-factor'
+  
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rspec-rails'
   spec.add_development_dependency 'factory_girl_rails'
